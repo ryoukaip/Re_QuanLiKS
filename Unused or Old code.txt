@@ -1,0 +1,2 @@
+// old code insert to a room
+sQLiteHandler.ExecuteNonQuery("INSERT INTO Room(RoomID, GuestName, CheckinDateTime, CheckoutDateTime, MaintenanceStatus, Drinks, Foods, Services, Note) VALUES('" + RoomID + "', '" + GuestName + "', '" + CheckinDate + " " + CheckinTime + "', '" + CheckoutDate + " " + CheckoutTime + "', 'Occupied', '" + string.Join("|", Drinks) + "', '" + string.Join("|", Foods) + "', '" + string.Join("|", Services) + "', '" + textBox_Note.Text + "')");

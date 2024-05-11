@@ -1,0 +1,8 @@
+- Add new room (implemented)
+- Edit room (implemented)
+- Change room (implemented)
+
+- Room checkout (implementing / finished design)
+- Maintanance Panel (implemented)
+- Room Report (implementing)
+- Price list
