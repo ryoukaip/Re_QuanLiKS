@@ -195,6 +195,7 @@
     <EmbeddedResource Include="RoomReport.resx">
       <DependentUpon>RoomReport.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="database.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
