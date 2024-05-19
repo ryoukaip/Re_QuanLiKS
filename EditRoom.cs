@@ -25,7 +25,7 @@ namespace Re_QuanLiKS
             sQLiteHandler.OpenConnection();
 
             //Get the guest name
-            textBox_GuestName.Text = sQLiteHandler.StringExecuteScalar("SELECT GuestName FROM Room WHERE RoomID = '" + roomID + "'");
+            textBox_GuestName.Text = AESHandler.DecryptString(sQLiteHandler.StringExecuteScalar("SELECT GuestName FROM Room WHERE RoomID = '" + roomID + "'"));
 
             //Get checkin and checkout date time
             #region
@@ -253,7 +253,7 @@ namespace Re_QuanLiKS
         // update the database
         private void updateGuestName()
         {
-            string guestName = textBox_GuestName.Text;
+            string guestName = AESHandler.EncryptString(textBox_GuestName.Text, true);
             string roomID = textBox_RoomID.Text;
             string query = "UPDATE Room SET GuestName = '" + guestName + "' WHERE RoomID = '" + roomID + "'";
             sQLiteHandler.ExecuteNonQuery(query);
