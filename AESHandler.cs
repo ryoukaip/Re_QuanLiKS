@@ -71,6 +71,26 @@ namespace Re_QuanLiKS
                 }
             }
         }
+        public static string EncryptString(string plainText, bool returnString = true)
+        {
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = Convert.FromBase64String(defaultKey);
+                aesAlg.IV = Convert.FromBase64String(defaultIV);
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                    {
+                        swEncrypt.Write(plainText);
+                    }
+                    return Convert.ToBase64String(msEncrypt.ToArray());
+                }
+            }
+        }
         public static string DecryptString(byte[] cipherText, byte[] key, byte[] iv)
         {
             using (Aes aesAlg = Aes.Create())
@@ -107,6 +127,27 @@ namespace Re_QuanLiKS
                         return srDecrypt.ReadToEnd();
                     }
                 }
+            }
+        }
+        public static string DecryptString(string cipherText)
+        {
+            return DecryptString(Convert.FromBase64String(cipherText));
+        }
+        public static bool matchKeyIV(string key, string iv)
+        {
+            if (key.Length != 44 || iv.Length != 24)
+            {
+                return false;
+            }
+            try
+            {
+                Convert.FromBase64String(key);
+                Convert.FromBase64String(iv);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
             }
         }
     }

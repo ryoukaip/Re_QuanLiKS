@@ -24,7 +24,7 @@ namespace Re_QuanLiKS
             sQLiteHandler.OpenConnection();
 
             // get GuestName
-            textBox_GuestName.Text = sQLiteHandler.StringExecuteScalar("SELECT GuestName FROM Room WHERE RoomID = '" + roomID + "'");
+            textBox_GuestName.Text = AESHandler.DecryptString(sQLiteHandler.StringExecuteScalar("SELECT GuestName FROM Room WHERE RoomID = '" + roomID + "'"));
             //get CheckinDateTime
             label_CheckinDateTime.Text = sQLiteHandler.StringExecuteScalar("SELECT CheckinDateTime FROM Room WHERE RoomID = '" + roomID + "'");
             //get CheckoutDateTime

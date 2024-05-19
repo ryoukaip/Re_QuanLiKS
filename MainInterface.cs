@@ -28,14 +28,18 @@ namespace Re_QuanLiKS
                 dataGridView1.Columns[i].Width = 100;
             }
 
-            // decrypt the value of second column, row 6th of the data grid view
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            // decrypt the value of second columnof the data grid view
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++) //
             {
-                if (i == 5)
+                for (int j = 0; j < 2; j++)
                 {
-                    string encryptedValue = (dataGridView1.Rows[i].Cells[1].Value.ToString());
-                    string decryptedValue = AESHandler.DecryptString(Convert.FromBase64String(encryptedValue));
-                    dataGridView1.Rows[i].Cells[1].Value = decryptedValue;
+                    if (j == 1)
+                    {
+                        string encryptedValue = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                        //MessageBox.Show(encryptedValue);
+                        string decryptedValue = AESHandler.DecryptString(Convert.FromBase64String(encryptedValue));
+                        dataGridView1.Rows[i].Cells[j].Value = decryptedValue.ToString();
+                    }
                 }
             }
 
@@ -58,6 +62,22 @@ namespace Re_QuanLiKS
                 {
                     dataGridView1.Columns[i].Width = 100;
                 }
+
+                // decrypt the value of second columnof the data grid view
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++) //
+                {
+                    for (int j = 0; j < 2; j++)
+                    {
+                        if (j == 1)
+                        {
+                            string encryptedValue = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                            //MessageBox.Show(encryptedValue);
+                            string decryptedValue = AESHandler.DecryptString(Convert.FromBase64String(encryptedValue));
+                            dataGridView1.Rows[i].Cells[j].Value = decryptedValue.ToString();
+                        }
+                    }
+                }
+
                 // close connection
                 sQLiteHandler.CloseConnection();
             }

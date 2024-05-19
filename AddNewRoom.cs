@@ -160,10 +160,10 @@ namespace Re_QuanLiKS
             // check if the room is in the maintenance
             // table Maintenance with 'RoomID' and 'Status' as 'Repairing', 'Cleaning'
             #region
-            query = "SELECT COUNT(*) FROM Maintenance WHERE RoomID = '" + RoomID + "' AND Status = 'Repairing' OR Status = 'Cleaning'";
+            query = "SELECT COUNT(*) FROM Maintenance WHERE RoomID = '" + RoomID + "' AND (Status = 'Repairing' OR Status = 'Cleaning')";
             count = sQLiteHandler.IntExecuteScalar(query);
-            //MessageBox.Show(count.ToString());
-            if (count - 1 > 0)
+            MessageBox.Show(count.ToString());
+            if (count > 0)
             {
                 MessageBox.Show("Phòng đang trong quá trình bảo trì!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
