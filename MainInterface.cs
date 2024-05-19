@@ -35,10 +35,18 @@ namespace Re_QuanLiKS
                 {
                     if (j == 1)
                     {
-                        string encryptedValue = dataGridView1.Rows[i].Cells[j].Value.ToString();
-                        //MessageBox.Show(encryptedValue);
-                        string decryptedValue = AESHandler.DecryptString(Convert.FromBase64String(encryptedValue));
-                        dataGridView1.Rows[i].Cells[j].Value = decryptedValue.ToString();
+                        try
+                        {
+                            string encryptedValue = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                            //MessageBox.Show(encryptedValue);
+                            string decryptedValue = AESHandler.DecryptString(Convert.FromBase64String(encryptedValue));
+                            dataGridView1.Rows[i].Cells[j].Value = decryptedValue.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                            this.Close();
+                        }
                     }
                 }
             }
