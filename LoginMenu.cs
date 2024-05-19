@@ -15,12 +15,17 @@ namespace Re_QuanLiKS
     {
         //private static SQLHandler sql;
         private static SQLiteHandler sqlite;
+
+        // Brute-force login times
+        private int maxLogin = 3;
+        private int currentLoginTimes = 0;
+
         public LoginMenu()
         {
             InitializeComponent();
             //sql = SQLHandler.Instance;
             sqlite = SQLiteHandler.Instance;
-            
+
         }
 
         private void button_clear_input_Click(object sender, EventArgs e)
@@ -94,9 +99,17 @@ namespace Re_QuanLiKS
         //}
         private void button_login_Click(object sender, EventArgs e)
         {
-            sqlite.OpenConnection();
             string username = textBox_username.Text;
             string password = textBox_password.Text;
+
+            sqlite.OpenConnection();
+
+            // The account is blocked
+            if (IsAccountBlocked(username) == "BLOCK")
+            {
+                MessageBox.Show("Your account is blocked. Please contact the administrator.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             // Retrieve the password from the database based on the username
             string passwordFromDatabase = sqlite.ExecuteScalar<string>
@@ -115,10 +128,58 @@ namespace Re_QuanLiKS
             }
             else
             {
-                MessageBox.Show("Username or password is incorrect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Username is exist but enter password is incorrect
+                if (isUsernameExist(username))
+                {
+                    // Block account if incorrect
+                    if (currentLoginTimes == maxLogin)
+                    {
+                        BlockAccount(username);
+                        return;
+                    }
+
+                    MessageBox.Show("Password is incorrect, your account will be blocked after " + (maxLogin - currentLoginTimes) + " tries", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    currentLoginTimes++;
+                }
+                // Not found username
+                else
+                {
+                    MessageBox.Show("Please check username again");
+                } 
             }
         }
 
+        private bool isUsernameExist(string username)
+        {
+            return !string.IsNullOrEmpty(sqlite.ExecuteScalar<string>
+            (
+                "SELECT Username FROM Receptionist WHERE Username = '" + username + "'"
+            ));
+        }
+
+        // Block account (anti Brute-Force),
+        // "BLOCK" = account is block
+        // "UNLOCK" = account is unlock
+        private string IsAccountBlocked(string username)
+        {
+            return sqlite.ExecuteScalar<string>
+            (
+                "SELECT isBlock FROM Receptionist WHERE Username = '" + username + "'"
+            );
+        }
+
+        private void BlockAccount(string username)
+        {
+            // Set isBlock column to 1 (true) for the specified username
+            sqlite.ExecuteNonQuery(
+                "UPDATE Receptionist SET isBlock = 'BLOCK' WHERE Username = '" + username + "'"
+            );
+
+            MessageBox.Show("Your account has been blocked due to multiple incorrect login attempts.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            // Reset login attempt counter
+            currentLoginTimes = 0;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
