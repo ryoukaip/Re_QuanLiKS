@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
-
+using Microsoft.Data.Sqlite;
 namespace Re_QuanLiKS
 {
     public sealed class SQLiteHandler
@@ -30,8 +30,8 @@ namespace Re_QuanLiKS
             // (condition) ? (if true) : (if false)
             databasePath = System.IO.File.Exists("../../database.db") ? "../../database.db" : "database.db";
 
-            string connectionString = $"Data Source={databasePath};Version=3;";
-            connection = new SQLiteConnection(connectionString);
+            string baseConnectionString = $"Data Source={databasePath};Version=3;";
+            connection = new SQLiteConnection(baseConnectionString);
         }
 
 

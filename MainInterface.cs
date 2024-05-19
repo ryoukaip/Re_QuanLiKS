@@ -27,6 +27,19 @@ namespace Re_QuanLiKS
             {
                 dataGridView1.Columns[i].Width = 100;
             }
+
+            // decrypt the value of second column, row 6th of the data grid view
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (i == 5)
+                {
+                    string encryptedValue = (dataGridView1.Rows[i].Cells[1].Value.ToString());
+                    string decryptedValue = AESHandler.DecryptString(Convert.FromBase64String(encryptedValue));
+                    dataGridView1.Rows[i].Cells[1].Value = decryptedValue;
+                }
+            }
+
+
             // close connection
             sQLiteHandler.CloseConnection();
         }

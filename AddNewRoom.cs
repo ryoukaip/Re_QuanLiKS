@@ -52,7 +52,8 @@ namespace Re_QuanLiKS
             // get all the information from the form to variables
             #region
             string RoomID = textBox_RoomID.Text;
-            string GuestName = textBox_GuestName.Text;
+            //string GuestName = textBox_GuestName.Text;
+            string GuestName = Convert.ToBase64String(AESHandler.EncryptString(textBox_GuestName.Text).encrypted);
             string CheckinDate = dateTimePicker_CheckinDate.Value.ToString("yyyy-MM-dd");
             string CheckoutDate = dateTimePicker_CheckoutDate.Value.ToString("yyyy-MM-dd");
             string CheckinTime = dateTimePicker_CheckinTime.Value.ToString("HH:mm");
@@ -161,7 +162,8 @@ namespace Re_QuanLiKS
             #region
             query = "SELECT COUNT(*) FROM Maintenance WHERE RoomID = '" + RoomID + "' AND Status = 'Repairing' OR Status = 'Cleaning'";
             count = sQLiteHandler.IntExecuteScalar(query);
-            if (count > 0)
+            //MessageBox.Show(count.ToString());
+            if (count - 1 > 0)
             {
                 MessageBox.Show("Phòng đang trong quá trình bảo trì!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

@@ -37,6 +37,7 @@
             this.label_username = new System.Windows.Forms.Label();
             this.lable_welcome = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox_iv = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button_exit
@@ -131,12 +132,20 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBox_iv
+            // 
+            this.textBox_iv.Location = new System.Drawing.Point(13, 411);
+            this.textBox_iv.Name = "textBox_iv";
+            this.textBox_iv.Size = new System.Drawing.Size(374, 20);
+            this.textBox_iv.TabIndex = 11;
+            // 
             // LoginMenu
             // 
             this.AcceptButton = this.button_login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(401, 423);
+            this.ClientSize = new System.Drawing.Size(401, 446);
+            this.Controls.Add(this.textBox_iv);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button_exit);
             this.Controls.Add(this.button_clear_input);
@@ -164,5 +173,6 @@
         private System.Windows.Forms.Label label_username;
         private System.Windows.Forms.Label lable_welcome;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox_iv;
     }
 }

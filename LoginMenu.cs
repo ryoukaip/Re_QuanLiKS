@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BCrypt.Net;
 
 namespace Re_QuanLiKS
 {
@@ -61,23 +62,50 @@ namespace Re_QuanLiKS
 
         //    sql.Close();
         //}
+        //private void button_login_Click(object sender, EventArgs e)
+        //{
+        //    sqlite.OpenConnection();
+        //    string username = textBox_username.Text;
+        //    string password = textBox_password.Text;
+        //    string usernameFromDatabase = sqlite.ExecuteScalar<string>
+        //    (
+        //    "SELECT Username from Receptionist " +
+        //    "WHERE Username = '" + username +"'" +
+        //    "AND Password = '" + password + "'");
+        //    string passwordFromDatabase = sqlite.ExecuteScalar<string>
+        //    (
+        //        "SELECT Password from Receptionist " +
+        //        "WHERE Username = '" + username + "'");
+        //    // if username and password are correct
+        //    if ((username == usernameFromDatabase) && BCrypt.Net.BCrypt.Verify(password, passwordFromDatabase))
+        //    {
+        //        MainInterface mainInterface = new MainInterface();
+        //        this.Hide();
+        //        mainInterface.ShowDialog();
+        //        this.Show();
+        //        sqlite.CloseConnection();
+        //    }
+        //    // if username and password are incorrect
+        //    else
+        //    {
+        //        MessageBox.Show("Username or password is incorrect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+        //}
         private void button_login_Click(object sender, EventArgs e)
         {
             sqlite.OpenConnection();
             string username = textBox_username.Text;
             string password = textBox_password.Text;
-            string usernameFromDatabase = sqlite.ExecuteScalar<string>
-            (
-            "SELECT Username from Receptionist " +
-            "WHERE Username = '" + username +"'" +
-            "AND Password = '" + password + "'");
+
+            // Retrieve the password from the database based on the username
             string passwordFromDatabase = sqlite.ExecuteScalar<string>
             (
-                "SELECT Password from Receptionist " +
-                "WHERE Username = '" + username + "'" +
-                "AND Password = '" + password + "'");
-            // if username and password are correct
-            if (username == usernameFromDatabase && password == passwordFromDatabase)
+                "SELECT Password FROM Receptionist WHERE Username = '" + username + "'"
+            );
+
+            // Verify the password if the username exists in the database
+            if (!string.IsNullOrEmpty(passwordFromDatabase) && BCrypt.Net.BCrypt.Verify(password, passwordFromDatabase) && (textBox_iv.Text == AESHandler.defaultIV))
             {
                 MainInterface mainInterface = new MainInterface();
                 this.Hide();
@@ -85,13 +113,12 @@ namespace Re_QuanLiKS
                 this.Show();
                 sqlite.CloseConnection();
             }
-            // if username and password are incorrect
             else
             {
                 MessageBox.Show("Username or password is incorrect!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
