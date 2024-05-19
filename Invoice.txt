@@ -1,26 +1,21 @@
 Checkout
 ------------------------------------------------
-Room ID: 111
-Guest Name: lmao
-Checkin Date & Time: 2023-07-18 22:19
-Checkout Date & Time: 23/07/2023 08:37:12
-Total Time: 8 (12hrs) x 30 + 10 (hrs) x 3 = $270
+Room ID: 6666
+Guest Name: 234234
+Checkin Date & Time: 2023-07-16 22:15
+Checkout Date & Time: 2023-07-16 23:16
+Total Time: 0 (12hrs) x 30 + 1 (hrs) x 3 = $3
 ------------------------------------------------
 Drinks:
-	Coca-Cola 2 x $2.5
-	Coffee 2 x $3
-	Orange Juice 2 x $2
+	Coca-Cola 8 x $2.5
 ------------------------------------------------
 Foods:
-	Burger 2 x $5
-	Salad 2 x $4.5
+	Burger 9 x $5
 ------------------------------------------------
 Services:
 	Laundry 2 x $10
-	Room Service 2 x $15
-	Spa 2 x $20
 ------------------------------------------------
-Total Price: $270 + $15 + $19 + $90 = $394
+Total Price: $3 + $20 + $45 + $20 = $88
 ------------------------------------------------
 Thank you for using our service!
 ------------------------------------------------

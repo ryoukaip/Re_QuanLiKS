@@ -109,5 +109,22 @@ namespace Re_QuanLiKS
                 }
             }
         }
+        public static bool matchKeyIV(string key, string iv)
+        {
+            if (key.Length != 44 || iv.Length != 24)
+            {
+                return false;
+            }
+            try
+            {
+                Convert.FromBase64String(key);
+                Convert.FromBase64String(iv);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
     }
 }
